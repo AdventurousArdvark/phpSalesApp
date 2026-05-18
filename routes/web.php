@@ -13,8 +13,14 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+    $itemCount = \App\Models\Item::count();
+    $customerCount = \App\Models\Customer::count();
+    $recentOrders = \App\Models\Order::with('customer')
+        ->orderBy('created_at', 'desc')
+        ->take(5)
+        ->get();
+    return view('dashboard', compact('itemCount', 'customerCount', 'recentOrders'));
+})->middleware('auth')->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

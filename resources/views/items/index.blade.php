@@ -39,6 +39,10 @@
                                 <td class="px-6 py-4">{{ $item->formatted_price }}</td>
                                 <td class="px-6 py-4">{{ $item->quantity }}</td>
                                 <td class="px-6 py-4 flex gap-2">
+                                    <form method="POST" action="{{ route('cart.add', $item) }}">
+                                        @csrf
+                                        <button type="submit" class="text-green-600 hover:underline">Add to Cart</button>
+                                    </form>
                                     <a href="{{ route('items.show', $item) }}" class="text-blue-600 hover:underline">View</a>
                                     <a href="{{ route('items.edit', $item) }}" class="text-yellow-600 hover:underline">Edit</a>
                                     <form method="POST" action="{{ route('items.destroy', $item) }}"

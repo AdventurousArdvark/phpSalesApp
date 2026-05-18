@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\CartController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -19,6 +20,11 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::resource('items', ItemController::class);
     Route::resource('customers', CustomerController::class);
+    Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+    Route::post('/cart/add/{item}', [CartController::class, 'add'])->name('cart.add');
+    Route::patch('/cart/update/{cartLine}', [CartController::class, 'update'])->name('cart.update');
+    Route::delete('/cart/remove/{cartLine}', [CartController::class, 'remove'])->name('cart.remove');
+    Route::delete('/cart/clear', [CartController::class, 'clear'])->name('cart.clear');
 });
 
 require __DIR__.'/auth.php';

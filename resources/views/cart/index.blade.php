@@ -65,7 +65,7 @@
                                 </button>
                             </form>
                             <a href="{{ route('checkout.index') }}"
-                               class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600">
+                            class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600">
                                 Checkout
                             </a>
                         </div>

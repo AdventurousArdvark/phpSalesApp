@@ -17,7 +17,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->string('sku')->unique();
             $table->decimal('price');
-            $table->integer('inventory')->default(0);
+            $table->integer('quantity')->default(0);
             $table->timestamps();
 
             $table->index('name');

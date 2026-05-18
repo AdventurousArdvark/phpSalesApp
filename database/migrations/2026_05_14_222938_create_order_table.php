@@ -19,7 +19,7 @@ return new class extends Migration
             $table->decimal('subtotal', 10, 2)->default(0);
             $table->decimal('tax', 10, 2)->default(0);
             $table->decimal('total', 10, 2)->default(0);
-            $table->decimal('order_date');
+            $table->timestamp('order_date');
             $table->timestamps();
 
             $table->index('status');

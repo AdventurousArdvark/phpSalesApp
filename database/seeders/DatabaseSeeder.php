@@ -13,7 +13,7 @@ class DatabaseSeeder extends Seeder{
      * Seed the application's database.
      */
     public function run(): void{
-        $this-call([
+        $this->call([
             ItemSeeder::class,
             CustomerSeeder::class,
             OrderSeeder::class,

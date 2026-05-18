@@ -31,8 +31,8 @@ class Item extends Model
     }
 
     public function scopeSearch($query, $term){
-        return $query->where('name', 'like', "%{term}%")
-                    ->orWhere('sku', 'like', "%{term}%"); 
+        return $query->where('name', 'like', "%{$term}%")
+                    ->orWhere('sku', 'like', "%{$term}%"); 
     }
 
     public function getFormattedPriceAttribute(){

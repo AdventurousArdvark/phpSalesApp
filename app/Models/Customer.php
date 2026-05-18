@@ -25,9 +25,9 @@ class Customer extends Model
     }
 
     public function scopeSearch($query, $term){
-        return $query->where('first_name', 'like', "%{term}%")
-                    ->orWhere('last_name', 'like', "%{term}%")
-                    ->orWhere('email', 'like', "%{term}%");
+        return $query->where('first_name', 'like', "%{$term}%")
+                    ->orWhere('last_name', 'like', "%{$term}%")
+                    ->orWhere('email', 'like', "%{$term}%");
     }
 
     public function getFullNameAttribute(){

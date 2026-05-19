@@ -37,12 +37,24 @@
                                 <td class="px-6 py-4">{{ $item->name }}</td>
                                 <td class="px-6 py-4">{{ $item->sku }}</td>
                                 <td class="px-6 py-4">{{ $item->formatted_price }}</td>
-                                <td class="px-6 py-4">{{ $item->quantity }}</td>
+                                <td class="px-6 py-4">
+                                    @if ($item->quantity === 0)
+                                        <span class="px-2 py-1 text-xs rounded-full bg-red-100 text-red-800">Out of Stock</span>
+                                    @elseif ($item->quantity <= 5)
+                                        <span class="px-2 py-1 text-xs rounded-full bg-yellow-100 text-yellow-800">Low: {{ $item->quantity }}</span>
+                                    @else
+                                        <span class="text-green-600">{{ $item->quantity }}</span>
+                                    @endif
+                                </td>
                                 <td class="px-6 py-4 flex gap-2">
-                                    <form method="POST" action="{{ route('cart.add', $item) }}">
-                                        @csrf
-                                        <button type="submit" class="text-green-600 hover:underline">Add to Cart</button>
-                                    </form>
+                                    @if ($item->quantity > 0)
+                                        <form method="POST" action="{{ route('cart.add', $item) }}">
+                                            @csrf
+                                            <button type="submit" class="text-green-600 hover:underline">Add to Cart</button>
+                                        </form>
+                                    @else
+                                        <span class="text-gray-400">Out of Stock</span>
+                                    @endif
                                     <a href="{{ route('items.show', $item) }}" class="text-blue-600 hover:underline">View</a>
                                     <a href="{{ route('items.edit', $item) }}" class="text-yellow-600 hover:underline">Edit</a>
                                     <form method="POST" action="{{ route('items.destroy', $item) }}"

@@ -6,10 +6,23 @@ use App\Models\Order;
 
 class OrderController extends Controller{
     public function index(){
-        $orders = Order::with('customer')
-            ->orderBy('created_at', 'desc')
-            ->paginate(15);
+        $query = Order::with('customer');
 
+        if (request('status')) {
+            $query->status(request('status'));
+        }
+
+        if (request('search')) {
+            $search = request('search');
+            $query->where('order_number', 'like', "%{$search}%")
+                ->orWhereHas('customer', function ($q) use ($search) {
+                    $q->where('first_name', 'like', "%{$search}%")
+                        ->orWhere('last_name', 'like', "%{$search}%");
+                });
+        }
+
+        $orders = $query->orderBy('created_at', 'desc')->paginate(15);
+    
         return view('orders.index', compact('orders'));
     }
 

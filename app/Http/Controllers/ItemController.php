@@ -47,9 +47,20 @@ class ItemController extends Controller{
     }
 
     public function destroy(Item $item){
-        $item->delete();
+        try {
+            if ($item->orderLines()->exists()) {
+                return redirect()->route('items.index')
+                    ->with('error', 'Cannot delete item that appears in existing orders.');
+            }
 
-        return redirect()->route('items.index')
-            ->with('success', 'Item deleted successfully.');
+            $item->cartLines()->delete();
+            $item->delete();
+
+            return redirect()->route('items.index')
+                ->with('success', 'Item deleted successfully.');
+        } catch (\Exception $e) {
+            return redirect()->route('items.index')
+                ->with('error', 'An error occurred while deleting the item.');
+        }
     }
 }

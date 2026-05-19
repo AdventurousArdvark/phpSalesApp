@@ -48,14 +48,19 @@ class CustomerController extends Controller{
     }
 
     public function destroy(Customer $customer){
-        if ($customer->orders()->exists()) {
+        try {
+            if ($customer->orders()->exists()) {
+                return redirect()->route('customers.index')
+                    ->with('error', 'Cannot delete customer with existing orders.');
+            }
+    
+            $customer->delete();
+
             return redirect()->route('customers.index')
-                ->with('error', 'Cannot delete customer with existing orders.');
+                ->with('success', 'Customer deleted successfully.');
+        } catch (\Exception $e) {
+            return redirect()->route('customers.index')
+                ->with('error', 'An error occurred while deleting the customer.');
         }
-
-        $customer->delete();
-
-        return redirect()->route('customers.index')
-            ->with('success', 'Customer deleted successfully.');
     }
 }

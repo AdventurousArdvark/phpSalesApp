@@ -56,3 +56,124 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+
+### Brett Laguerra - 5/19/2026
+
+## Tech Stack
+
+- PHP 8.3
+- Laravel 11
+- MariaDB
+- Eloquent ORM
+- Laravel Breeze (Authentication)
+- Tailwind CSS
+
+### Setup Instructions
+
+## Prerequisites
+
+- PHP 8.3+
+- Composer
+- Node.js & npm
+- MariaDB
+
+## Installation
+
+1. Clone the repository:
+
+```bash
+git clone git@github.com:yourusername/your-repo.git
+cd your-repo
+
+```
+
+2. Install PHP dependencies:
+
+```bash
+composer install
+
+```
+
+3. Install frontend dependencies:
+
+```bash
+npm install
+
+```
+
+4. Copy the environment file and configure it:
+
+```bash
+cp .env.example .env
+php artisan key:generate
+
+```
+
+5. Update `.env` with your database credentials
+
+6. Create the database in MariaDB:
+
+```sql
+CREATE DATABASE your_database;
+
+```
+
+7. Run migrations and seed the database:
+
+```bash
+php artisan migrate --seed
+
+```
+
+8. Build frontend assets:
+
+```bash
+npm run build
+
+```
+
+9. Start the development server:
+
+```bash
+php artisan serve
+
+```
+
+10. Visit `http://localhost:8000`, register an account, and start using the application.
+
+
+### Features
+
+## Core
+
+- **Item Management** — Full CRUD for products with name, SKU, description, price, and inventory tracking
+- **Customer Management** — Full CRUD for customers with contact and address information
+- **Shopping Cart** — Add items, update quantities, remove items, clear cart
+- **Sales Orders** — Create orders from cart, select customer, automatic price snapshots and tax calculation
+- **Dashboard** — Summary view with item/customer counts and recent orders
+
+## Bonus
+
+- **Search & Filter** — Search items by name/SKU, customers by name/email, orders by number/customer
+- **Pagination** — All list views paginated at 15 records per page
+- **Authentication** — Full login/register system via Laravel Breeze
+- **Inventory Awareness** — Stock levels displayed with color indicators, out-of-stock items cannot be added to cart, quantities decrement on checkout with stock validation
+
+## Design Decisions
+
+- **Separate users and customers**: Users are people who log into the system. Customers are who orders are placed for. This supports a scenario where staff manage orders on behalf of customers.
+- **Price snapshots on order lines**: The `unit_price` on order lines captures the price at the time of purchase. If item prices change later, historical orders remain accurate.
+- **CartService class**: Business logic for cart operations is extracted into a service class to keep controllers thin and logic reusable/testable.
+- **DB transactions on checkout**: The entire checkout process is wrapped in a database transaction to ensure data integrity — if any step fails, everything rolls back.
+- **Soft stock validation**: Stock is checked both when adding to cart and again at checkout to handle race conditions where stock may have changed.
+
+## What I Would Improve Given More Time
+
+- Create unit testing for CRUD operations and checkout flow
+- Create order management for status
+- Allow user to print customer, item, or orders to a CSV
+- Get user feedback about the flow and alter accordingly
+- Overhaul the look of the application to feel more customized
+- Implement real-time cart updates
+- Send email notifications for orders and/or inventory(if stock is below a threshold)

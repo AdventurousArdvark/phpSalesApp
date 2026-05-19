@@ -83,8 +83,8 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 1. Clone the repository:
 
 ```bash
-git clone git@github.com:yourusername/your-repo.git
-cd your-repo
+git https://github.com/AdventurousArdvark/phpSalesApp
+cd phpSalesApp
 
 ```
 
